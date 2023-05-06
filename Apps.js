@@ -1,10 +1,13 @@
-import './App.css';
-import React, { useState } from 'react';
+/* import './App.css';
+import { saveAs } from 'file-saver';
+import { useState } from 'react';
+import { memeTemps } from './memes.js';
+import defaultDoge from './memeTemplates/doge.jpeg';
 
 export default function MemeGenerator() {
   const [topText, setTopText] = useState('');
   const [bottomText, setBottomText] = useState('');
-  const [meme, setMeme] = useState('doge');
+  const [meme, setMeme] = useState(defaultDoge);
   const [finalMeme, setFinalMeme] = useState(
     `https://api.memegen.link/images/${meme}/${topText}/${bottomText}`,
   );
@@ -15,10 +18,14 @@ export default function MemeGenerator() {
     );
     console.log(finalMeme);
   }
+  // Download and save Meme
+  const downloadMeme = () => {
+    const url = finalMeme;
+    saveAs(url, meme); // ???? save as importiert- noch ka was wie wo
+  };
   return (
     <div className="GeneratorButton">
       <h1>Meme Generator</h1>
-      <p>Juice your fresh picture !</p>
       <form>
         <label>
           Top text:
@@ -41,34 +48,31 @@ export default function MemeGenerator() {
           />
         </label>
       </form>
+      <p>Juice your fresh picture !</p>
       <form>
         <div>
           Meme Templates:
           <select
-            defaultValue={meme}
+            defaultValue={defaultDoge}
             value={meme}
             onChange={(e) => {
               setMeme(e.target.value);
             }}
           >
-            <option value="doge">Doge</option>
-            <option value="captain">Captain</option>
-            <option value="depressed">Depressed</option>
-            <option value="grumpy">Grumpy</option>
-            <option value="honest">Honest</option>
-            <option value="kermit">Kermit</option>
-            <option value="noone">Noone</option>
-            <option value="scared">Scared</option>
-            <option value="wonka">Wonka</option>
+            {memeTemps.map((choice) => (
+              <option value={choice.value} key={choice}>
+                {choice.value}
+              </option>
+            ))}
           </select>
+          <img src={meme} alt="wtf" />
         </div>
       </form>
-      <button type="button" onClick={generateMeme}>
-        Generate Meme
-      </button>
-      <div className="Meme">
-        <img src={finalMeme} alt="Meme" />
+      <div>
+        <button onClick={generateMeme}>Generate Meme</button>
+        <button onClick={downloadMeme}>Download Meme</button>
       </div>
     </div>
   );
 }
+ */
