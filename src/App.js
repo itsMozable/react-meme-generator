@@ -26,14 +26,20 @@ export default function MemeGenerator() {
     setTopText('');
     setBottomText('');
   }
+
   // generate final meme
-  function generateMeme(event) {
-    event.preventDefault();
-    if (topText === '' || bottomText === '') {
-      setFinalMeme(`https://api.memegen.link/images/${meme}/ / `);
+  function generateMeme(abc) {
+    if (abc === undefined) {
+      abc = meme;
+    }
+    // event.preventDefault();
+    if (topText === '') {
+      setFinalMeme(`https://api.memegen.link/images/${abc}/ /${bottomText}`);
+    } else if (bottomText === '') {
+      setFinalMeme(`https://api.memegen.link/images/${abc}/${topText}/ `);
     } else {
       setFinalMeme(
-        `https://api.memegen.link/images/${meme}/${topText}/${bottomText}`,
+        `https://api.memegen.link/images/${abc}/${topText}/${bottomText}`,
       );
       console.log(finalMeme);
     }
@@ -60,11 +66,10 @@ export default function MemeGenerator() {
                 onClick={clearText}
                 onChange={(e) => {
                   setMeme(e.target.value);
-                  generateMeme(e);
+                  generateMeme(e.target.value);
                 }}
                 onKeyDown={(e) => {
-                  setMeme(e.target.value);
-                  generateMeme(e);
+                  generateMeme(e.target.value);
                 }}
               >
                 {/* Dropdown options */}
@@ -113,7 +118,13 @@ export default function MemeGenerator() {
         </section>
 
         <section>
-          <button type="button" onClick={generateMeme}>
+          <button
+            type="button"
+            onClick={(e) => {
+              console.log(e.target.value);
+              generateMeme();
+            }}
+          >
             Generate Meme
           </button>
           <button onClick={downloadMeme}>Download Meme</button>
