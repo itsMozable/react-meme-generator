@@ -25,6 +25,7 @@ export default function MemeGenerator() {
     fetchData().catch(console.error);
   }, []);
 
+  // delete text if new Meme is selected
   function clearText(event) {
     event.preventDefault();
     setTopText('');
@@ -32,19 +33,14 @@ export default function MemeGenerator() {
   }
 
   // generate final meme
-  function generateMeme(abc) {
-    if (abc === undefined) {
-      abc = meme;
-    }
+  function generateMeme(image = meme, top = topText, bottom = bottomText) {
     // event.preventDefault();
     if (topText === '') {
-      setFinalMeme(`https://api.memegen.link/images/${abc}/ /${bottomText}`);
+      setFinalMeme(`https://api.memegen.link/images/${image}/ /${bottom}`);
     } else if (bottomText === '') {
-      setFinalMeme(`https://api.memegen.link/images/${abc}/${topText}/ `);
+      setFinalMeme(`https://api.memegen.link/images/${image}/${top}/ `);
     } else {
-      setFinalMeme(
-        `https://api.memegen.link/images/${abc}/${topText}/${bottomText}`,
-      );
+      setFinalMeme(`https://api.memegen.link/images/${image}/${top}/${bottom}`);
       console.log(finalMeme);
     }
   }
@@ -70,10 +66,10 @@ export default function MemeGenerator() {
                 onClick={clearText}
                 onChange={(e) => {
                   setMeme(e.target.value);
-                  generateMeme(e.target.value);
+                  generateMeme(e.target.value, topText, bottomText);
                 }}
                 onKeyDown={(e) => {
-                  generateMeme(e.target.value);
+                  generateMeme(e.target.value, topText, bottomText);
                 }}
               >
                 {/* Dropdown options */}
@@ -101,6 +97,7 @@ export default function MemeGenerator() {
                   value={topText}
                   onChange={(event) => {
                     setTopText(event.target.value);
+                    generateMeme(meme, event.target.value, bottomText);
                   }}
                 />
               </label>
@@ -114,6 +111,7 @@ export default function MemeGenerator() {
                   value={bottomText}
                   onChange={(event) => {
                     setBottomText(event.target.value);
+                    generateMeme(meme, topText, event.target.value);
                   }}
                 />
               </label>
@@ -122,16 +120,17 @@ export default function MemeGenerator() {
         </section>
 
         <section>
-          <button
+          {/*           <button
             type="button"
+            data-test-id="generate-meme"
             onClick={(e) => {
               console.log(e.target.value);
-              generateMeme();
+              generateMeme(meme, topText, bottomText);
             }}
           >
-            Generate Meme
-          </button>
-          <button onClick={downloadMeme}>Download Meme</button>
+            Generate
+          </button> */}
+          <button onClick={downloadMeme}>Download</button>
         </section>
         <div className="Meme Image">
           <img
