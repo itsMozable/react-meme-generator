@@ -13,12 +13,16 @@ export default function MemeGenerator() {
 
   // fetch all the meme templates
   useEffect(() => {
-    fetch(`https://api.memegen.link/templates`)
-      .then((response) => response.json())
-      .then((data) => {
-        setOptions(data);
-        console.log(data);
-      });
+    const fetchData = async () => {
+      await fetch(`https://api.memegen.link/templates`)
+        .then((response) => response.json())
+        .then((data) => {
+          setOptions(data);
+          console.log(data);
+        })
+        .catch(console.error);
+    };
+    fetchData().catch(console.error);
   }, []);
 
   function clearText(event) {
