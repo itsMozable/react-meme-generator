@@ -6,7 +6,7 @@ export default function MemeGenerator() {
   const [topText, setTopText] = useState(' ');
   const [bottomText, setBottomText] = useState(' ');
   const [options, setOptions] = useState([]);
-  const [meme, setMeme] = useState('fry');
+  const [meme, setMeme] = useState('doge');
   const [finalMeme, setFinalMeme] = useState(
     `https://api.memegen.link/images/${meme}/${topText}/${bottomText}`,
   );
@@ -36,7 +36,7 @@ export default function MemeGenerator() {
   function generateMeme(image = meme, top = topText, bottom = bottomText) {
     // event.preventDefault();
     if (topText === '') {
-      setFinalMeme(`https://api.memegen.link/images/${image}/ /${bottom}`);
+      setFinalMeme(`https://api.memegen.link/images/${image}/${bottom}`);
     } else if (bottomText === '') {
       setFinalMeme(`https://api.memegen.link/images/${image}/${top}/ `);
     } else {
