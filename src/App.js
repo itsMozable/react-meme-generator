@@ -2,6 +2,7 @@ import './styles.css';
 import { saveAs } from 'file-saver';
 import React, { useEffect, useState } from 'react';
 
+// Whole Application
 export default function MemeGenerator() {
   const [topText, setTopText] = useState(' ');
   const [bottomText, setBottomText] = useState(' ');
@@ -18,12 +19,12 @@ export default function MemeGenerator() {
         .then((response) => response.json())
         .then((data) => {
           setOptions(data);
-          console.log(data);
         })
+        // Nescessary Catch - like a break function
         .catch(console.error);
     };
     fetchData().catch(console.error);
-  }, []);
+  }, []); // empty array to prevent infinite loop
 
   // delete text if new Meme is selected
   function clearText(event) {
@@ -34,14 +35,14 @@ export default function MemeGenerator() {
 
   // generate final meme
   function generateMeme(image = meme, top = topText, bottom = bottomText) {
-    // event.preventDefault();
-    if (topText === '') {
+    if (top === '' && bottom === '') {
+      setFinalMeme(`https://api.memegen.link/images/${image}/ / `);
+    } else if (top === '') {
       setFinalMeme(`https://api.memegen.link/images/${image}/ /${bottom}`);
-    } else if (bottomText === '') {
-      setFinalMeme(`https://api.memegen.link/images/${image}/${top}/ `);
+    } else if (bottom === '') {
+      setFinalMeme(`https://api.memegen.link/images/${image}/${top}/`);
     } else {
       setFinalMeme(`https://api.memegen.link/images/${image}/${top}/${bottom}`);
-      console.log(finalMeme);
     }
   }
 
@@ -68,9 +69,6 @@ export default function MemeGenerator() {
                   setMeme(e.target.value);
                   generateMeme(e.target.value, topText, bottomText);
                 }}
-                onKeyDown={(e) => {
-                  generateMeme(e.target.value, topText, bottomText);
-                }}
               >
                 {/* Dropdown options */}
                 {options.map((templates) => (
@@ -83,8 +81,6 @@ export default function MemeGenerator() {
                 ))}
               </select>
             </label>
-            {/* alternative random meme button */}
-            {/* <button onClick={randomImage}>Random Meme</button> */}
           </div>
         </form>
         <section className="text input">
@@ -93,7 +89,6 @@ export default function MemeGenerator() {
               <label>
                 Top text:
                 <input
-                  size="54"
                   value={topText}
                   onChange={(event) => {
                     setTopText(event.target.value);
@@ -107,7 +102,6 @@ export default function MemeGenerator() {
               <label>
                 Bottom text:
                 <input
-                  size="50"
                   value={bottomText}
                   onChange={(event) => {
                     setBottomText(event.target.value);
@@ -120,16 +114,16 @@ export default function MemeGenerator() {
         </section>
 
         <section>
-          {/*           <button
+          <button
             type="button"
             data-test-id="generate-meme"
             onClick={(e) => {
-              console.log(e.target.value);
+              e.preventDefault();
               generateMeme(meme, topText, bottomText);
             }}
           >
             Generate
-          </button> */}
+          </button>
           <button onClick={downloadMeme}>Download</button>
         </section>
         <div className="Meme Image">

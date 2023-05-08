@@ -25,7 +25,7 @@ section {
 
 .finalMeme {
   background-color: beige;
-  border-radius: 20%;
+  border-radius: 10%;
   width: 600px;
   height: auto;
   border-style: solid;
@@ -102,4 +102,14 @@ button {
 
 .template {
   color: beige;
+}
+input {
+  color: darkslategrey;
+  font-size: 1rem;
+  border-radius: 4px;
+  padding: 4px;
+  margin: 4px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }
