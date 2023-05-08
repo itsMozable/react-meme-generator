@@ -114,7 +114,8 @@ export default function MemeGenerator() {
         </section>
 
         <section>
-          <button
+          {/* possible Generate Button */}
+          {/* <button
             type="button"
             data-test-id="generate-meme"
             onClick={(e) => {
@@ -123,7 +124,7 @@ export default function MemeGenerator() {
             }}
           >
             Generate
-          </button>
+          </button> */}
           <button onClick={downloadMeme}>Download</button>
         </section>
         <div className="Meme Image">
