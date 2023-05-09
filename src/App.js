@@ -14,17 +14,25 @@ export default function MemeGenerator() {
 
   // fetch all the meme templates
   useEffect(() => {
+    async function fetchData() {
+      const response = await fetch('https://api.memegen.link/templates/');
+      const data = await response.json();
+      setOptions(data);
+    }
+    fetchData();
+  }, []);
+
+  /* useEffect(() => {
     const fetchData = async () => {
-      await fetch(`https://api.memegen.link/templates`)
+      await fetch(MemeGenerator.url)
         .then((response) => response.json())
         .then((data) => {
           setOptions(data);
         })
-        // Nescessary Catch - like a break function
-        .catch(console.error);
     };
     fetchData().catch(console.error);
-  }, []); // empty array to prevent infinite loop
+  }, []);  */
+  // empty array to prevent infinite loop
 
   // delete text if new Meme is selected
   function clearText(event) {
